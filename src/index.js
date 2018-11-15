@@ -4,6 +4,7 @@ import Reset from './scenes/Reset'
 import Game from './scenes/Game'
 import HUDisplay from './scenes/HUDisplay'
 import GameOver from './scenes/GameOver'
+import RexPlugins from './plugins/rexplugins.min';
 
 window.sfx_config = {
     mute: false,
@@ -123,6 +124,13 @@ const config = {
             gravity: { y: 0 }
         }
     },
+    plugins: {
+        scene: [{
+            key: 'Game',
+            plugin: RexPlugins,
+            mapping: 'Game'
+        },
+    ]},
     scene: [
         Boot,
         Reset,
