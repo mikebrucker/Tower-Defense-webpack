@@ -1,3 +1,4 @@
+import BoardPlugin from '../plugins/rexboardplugin.min';
 import Hydralisk from './Hydralisk';
 
 class Lurker extends Hydralisk {

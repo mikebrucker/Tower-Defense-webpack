@@ -1,3 +1,5 @@
+import BoardPlugin from '../plugins/rexboardplugin.min';
+
 class Hydralisk extends Phaser.GameObjects.Sprite {
 
     constructor(scene, x, y, texture, frame) {
@@ -13,9 +15,9 @@ class Hydralisk extends Phaser.GameObjects.Sprite {
 
         this.follower.t += (hydraliskSpeed / (path.getLength() * 60));
     
-        path.getPoint(this.follower.t, this.follower.vec);
+        // path.getPoint(this.follower.t, this.follower.vec);
         
-        this.setPosition(this.follower.vec.x, this.follower.vec.y);
+        // this.setPosition(this.follower.vec.x, this.follower.vec.y);
         
         if (this.follower.vec.x > prevX) {
             if (this.follower.vec.y > prevY + 2) {

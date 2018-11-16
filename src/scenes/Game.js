@@ -3,6 +3,7 @@ import Bullet from '../sprites/Bullet';
 import Tower from '../sprites/Tower';
 import Hydralisk from '../sprites/Hydralisk';
 import Lurker from '../sprites/Lurker';
+import BoardPlugin from '../plugins/rexboardplugin.min';
 
 class Game extends Phaser.Scene {
     
@@ -26,23 +27,36 @@ class Game extends Phaser.Scene {
         worldLayer.setCollisionBetween(259, 268, true, 'World');
         worldLayer.setCollisionBetween(519, 534, true, 'World');
         
-        let board = this.rexBoard.add.board({
+        board = this.rexBoard.add.board({
             grid: {
                 gridType: 'quadGrid',
-                x: 1920,
-                y: 160,
+                x: 8,
+                y: 168,
                 cellWidth: 16,
                 cellHeight: 16,
                 type: 'orthogonal',
                 dir: 8
             },
-            width: 0,
-            height: 0
+            width: 120,
+            height: 30
         });
-        console.log(board);
+        // var graphics = this.add.graphics({
+        //     lineStyle: {
+        //         width: 1,
+        //         color: 0xffffff,
+        //         alpha: 1
+        //     }
+        // });
+        // board.forEachTileXY(function (tileXY, board) {
+        //     var points = board.getGridPoints(tileXY.x, tileXY.y, true);
+        //     graphics.strokePoints(points, true);
+        // })
+
+        // let chessA = new ChessA(board);
+        // console.log(chessA);
 
         let pathFinder = this.rexBoard.add.pathFinder(this, {
-            occupiedTest: false,
+            occupiedTest: true,
             blockerTest: false,
         
             cost: 1,   // constant cost
@@ -50,10 +64,10 @@ class Game extends Phaser.Scene {
             costCallbackScope: undefined,
             cacheCost: true,
         
-            pathMode: 10,  // A*
+            pathMode: 'A*',
             weight: 10,   // weight for A* searching mode
         });
-        console.log(pathFinder);
+        // console.log(pathFinder);
 
         path = this.add.path(124, 440);
         path.lineTo(124, 368);
@@ -141,7 +155,7 @@ class Game extends Phaser.Scene {
     
                 if (logWorldLayer[y][x].properties.buildable && logWorldLayer[y-1][x].properties.buildable && logWorldLayer[y][x-1].properties.buildable && logWorldLayer[y-1][x-1].properties.buildable) {
                     if (resources > 0) {
-                        headtowers.get(x*16, y*16, 'headtower')
+                        let headtower = headtowers.get(x*16, y*16, 'headtower')
                         .setInteractive().anims.play('headtower_do').body.setCircle(16);
                         this.sound.play('build_tower', sfx_config);
 
@@ -152,7 +166,20 @@ class Game extends Phaser.Scene {
                         logWorldLayer[y-1][x].properties.buildable = false;
                         logWorldLayer[y][x-1].properties.buildable = false;
                         logWorldLayer[y-1][x-1].properties.buildable = false;
-    
+
+                        let bl1 = board.addChess(headtower, x, y, 0, false);
+                        let bl2 = board.addChess(headtower, x-1, y, 0, false);
+                        let bl3 = board.addChess(headtower, x, y-1, 0, false);
+                        let bl4 = board.addChess(headtower, x-1, y-1, 0, false);
+                        // bl1.rexChess.setBlocker();
+                        // bl2.rexChess.setBlocker();
+                        // bl3.rexChess.setBlocker();
+                        // bl4.rexChess.setBlocker();
+                        console.log(bl1)
+                        // console.log(bl2)
+                        // console.log(bl3)
+                        // console.log(bl4)
+
                         resources--;
                         resourcesDisplay.setText(`Resources: ${resources}`)
                         if (resources >= upgradeCost) {

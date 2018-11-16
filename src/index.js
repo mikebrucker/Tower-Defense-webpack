@@ -6,6 +6,8 @@ import HUDisplay from './scenes/HUDisplay'
 import GameOver from './scenes/GameOver'
 import BoardPlugin from './plugins/rexboardplugin.min';
 
+window.board = null,
+
 window.sfx_config = {
     mute: false,
     loop: false,
