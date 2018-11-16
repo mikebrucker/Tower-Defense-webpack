@@ -26,6 +26,35 @@ class Game extends Phaser.Scene {
         worldLayer.setCollisionBetween(259, 268, true, 'World');
         worldLayer.setCollisionBetween(519, 534, true, 'World');
         
+        let board = this.rexBoard.add.board({
+            grid: {
+                gridType: 'quadGrid',
+                x: 1920,
+                y: 160,
+                cellWidth: 16,
+                cellHeight: 16,
+                type: 'orthogonal',
+                dir: 8
+            },
+            width: 0,
+            height: 0
+        });
+        console.log(board);
+
+        let pathFinder = this.rexBoard.add.pathFinder(this, {
+            occupiedTest: false,
+            blockerTest: false,
+        
+            cost: 1,   // constant cost
+            costCallback: undefined,
+            costCallbackScope: undefined,
+            cacheCost: true,
+        
+            pathMode: 10,  // A*
+            weight: 10,   // weight for A* searching mode
+        });
+        console.log(pathFinder);
+
         path = this.add.path(124, 440);
         path.lineTo(124, 368);
         path.lineTo(88, 368);

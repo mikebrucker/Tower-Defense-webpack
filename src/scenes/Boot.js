@@ -1,4 +1,4 @@
-import map_json from '../assets/json/sunken_defense_path.json';
+import map_json from '../assets/json/sunken_defense.json';
 import tiles from '../assets/images/ashlands_tileset.png';
 import tower_overlay from '../assets/images/tower_overlay.png';
 import bullet_single from '../assets/images/bullet_single.png';

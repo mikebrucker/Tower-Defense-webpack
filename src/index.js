@@ -4,7 +4,7 @@ import Reset from './scenes/Reset'
 import Game from './scenes/Game'
 import HUDisplay from './scenes/HUDisplay'
 import GameOver from './scenes/GameOver'
-import RexPlugins from './plugins/rexplugins.min';
+import BoardPlugin from './plugins/rexboardplugin.min';
 
 window.sfx_config = {
     mute: false,
@@ -126,9 +126,9 @@ const config = {
     },
     plugins: {
         scene: [{
-            key: 'Game',
-            plugin: RexPlugins,
-            mapping: 'Game'
+            key: 'rexBoard',
+            plugin: BoardPlugin,
+            mapping: 'rexBoard'
         },
     ]},
     scene: [
