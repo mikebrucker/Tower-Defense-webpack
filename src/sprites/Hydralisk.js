@@ -6,21 +6,55 @@ class Hydralisk extends Phaser.GameObjects.Sprite {
         super(scene, x, y, texture, frame);
         this.hp = hydraliskHP;
         this.damage = 100;
-        this.follower = { t: 0, vec: new Phaser.Math.Vector2() };
+        this.lastTile = null;
+        // this.follower = { t: 0, vec: new Phaser.Math.Vector2() };
+        this.moveTo = scene.rexBoard.add.moveTo(this, {
+            speed: hydraliskSpeed,
+            // blockerTest: true
+        });
+        this.pathFinder = scene.rexBoard.add.pathFinder(this, {
+            occupiedTest: true,
+            pathMode: 'A*',
+        });
+    }
+
+    moveToEnd() {
+        if (this.moveTo.isRunning) {
+            return false;
+        }
+        let pathToEnd = this.pathFinder.findPath({
+            x: 119,
+            y: Math.round(this.body.y/16) - 10
+        })
+        this.moveAlongPath(pathToEnd);
+        return true;
+    }
+
+    moveAlongPath(path) {
+        if (path.length === 0) {
+            return;
+        }
+
+        this.moveTo.once('complete', function () {
+            this.moveAlongPath(path);
+        }, this);
+        this.lastTile = path[0];
+        this.moveTo.moveTo(path.shift());
+        return this;
     }
     
     update(time, delta) {
-        let prevX = this.follower.vec.x,
-        prevY = this.follower.vec.y;
+        let prevX = this.lastTile.x,
+        prevY = this.lastTile.y;
 
-        this.follower.t += (hydraliskSpeed / (path.getLength() * 60));
+        // this.follower.t += (hydraliskSpeed / (path.getLength() * 60));
     
         // path.getPoint(this.follower.t, this.follower.vec);
         
         // this.setPosition(this.follower.vec.x, this.follower.vec.y);
         
-        if (this.follower.vec.x > prevX) {
-            if (this.follower.vec.y > prevY + 2) {
+        if (this.body.x > prevX) {
+            if (this.body.y > prevY) {
                 // if (Math.abs(this.body.velocity.x) < Math.abs(this.body.velocity.y)) {
                 //     this.anims.play('hydra_dldiag', true).setFlipX(false);
                 // } else if (Math.abs(this.body.velocity.x) > Math.abs(this.body.velocity.y)) {
@@ -28,7 +62,7 @@ class Hydralisk extends Phaser.GameObjects.Sprite {
                 // } else {
                     this.anims.play('hydra_ddiag', true).setFlipX(false);
                 // }
-            } else if (this.follower.vec.y < prevY - 2) {
+            } else if (this.body.y < prevY) {
                 // if (Math.abs(this.body.velocity.x) < Math.abs(this.body.velocity.y)) {
                 //     this.anims.play('hydra_uhdiag', true).setFlipX(false);
                 // } else if (Math.abs(this.body.velocity.x) > Math.abs(this.body.velocity.y)) {
@@ -39,8 +73,8 @@ class Hydralisk extends Phaser.GameObjects.Sprite {
             } else {
                 this.anims.play('hydra_side', true).setFlipX(false);
             }
-        } else if (this.follower.vec.x < prevX) {
-            if (this.follower.vec.y > prevY + 2) {
+        } else if (this.body.x < prevX) {
+            if (this.body.y > prevY) {
             //     if (Math.abs(this.body.velocity.x) < Math.abs(this.body.velocity.y)) {
             //         this.anims.play('hydra_dldiag', true).setFlipX(true);
             //     } else if (Math.abs(this.body.velocity.x) > Math.abs(this.body.velocity.y)) {
@@ -48,7 +82,7 @@ class Hydralisk extends Phaser.GameObjects.Sprite {
             //     } else {
                     this.anims.play('hydra_ddiag', true).setFlipX(true);
             //     }
-            } else if (this.follower.vec.y < prevY - 2) {
+            } else if (this.body.y < prevY) {
             //     if (Math.abs(this.body.velocity.x) < Math.abs(this.body.velocity.y)) {
             //         this.anims.play('hydra_uhdiag', true).setFlipX(true);
             //     } else if (Math.abs(this.body.velocity.x) > Math.abs(this.body.velocity.y)) {
@@ -60,9 +94,9 @@ class Hydralisk extends Phaser.GameObjects.Sprite {
                 this.anims.play('hydra_side', true).setFlipX(true);
             }
         } else {
-            if (this.follower.vec.y > prevY) {
+            if (this.body.y > prevY) {
                 this.anims.play('hydra_down', true);
-            } else if (this.follower.vec.y < prevY) {
+            } else if (this.body.y < prevY) {
                 this.anims.play('hydra_up', true);
             } else {
                 this.anims.play('hydra_stop');

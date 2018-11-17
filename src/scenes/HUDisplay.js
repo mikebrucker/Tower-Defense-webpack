@@ -260,7 +260,7 @@ class HUDisplay extends Phaser.Scene {
                 let lurkerbirth = births.create(151 - k, (j * 90) + 512, 'lurker');
                 lurkerbirth.anims.play('lurker_birth').on('animationcomplete', () => {
                     let lurker = lurkers.get(lurkerbirth.x, lurkerbirth.y, 'lurker');
-                    lurker.follower.t = (450 - (i * 90)) / lurkerpath.getLength();
+                    // lurker.follower.t = (450 - (i * 90)) / lurkerpath.getLength();
                     lurker.body.setCircle(16, 19, 17)
                     lurkerbirth.destroy();
                 }, this);
@@ -281,16 +281,18 @@ class HUDisplay extends Phaser.Scene {
             }, this);
             for (let i = 0; i < 24; i++) {
                 if (i % 4 === 0 && i > 0) {
-                    j = 0
+                    j = 0;
                 }
                 if (i % 4 === 0 && i > 0) {
                     k++;
                 }
                 let birth = births.create((j * 36) + 52, (k * 36) + 332, 'hydralisk');
                 birth.anims.play('hydra_birth').on('animationcomplete', () => {
-                    let hydra = hydralisks.get(birth.x, birth.y, 'hydralisk')
-                    hydra.follower.t = (i * 36) / path.getLength();
-                    hydra.body.setCircle(16, 6, 13)
+                    let hydra = hydralisks.get(birth.x, birth.y, 'hydralisk');
+                    board.addChess(hydra, Math.round(hydra.body.x/16), Math.round(hydra.body.y/16) -10, i, false);
+                    // hydra.follower.t = (i * 36) / path.getLength();
+                    hydra.body.setCircle(16, 6, 13);
+                    hydra.moveToEnd();
                     birth.destroy();
                 }, this);
                 j++;
