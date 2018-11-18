@@ -35,7 +35,7 @@ class Game extends Phaser.Scene {
                 cellWidth: 16,
                 cellHeight: 16,
                 type: 'orthogonal',
-                dir: 4
+                dir: 8
             },
             width: 120,
             height: 30

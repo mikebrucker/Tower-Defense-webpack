@@ -76,7 +76,7 @@ window.headtowers = null,
 window.bullets = null,
 
 window.upgradeCost = 1,
-window.resources = 10,
+window.resources = 50,
 window.towerDamage = 10,
 window.numberOfTowers = 0,
 window.waveNumber = 0,

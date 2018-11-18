@@ -164,7 +164,7 @@ class HUDisplay extends Phaser.Scene {
             clickNextWave = false;
         }, this).setOrigin(1, 0.5);
 
-        min = 0;
+        min = 1;
         sec = 16;
         timer = setInterval( () => {
             if (gameFocus) {
