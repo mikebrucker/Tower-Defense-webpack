@@ -8,15 +8,36 @@ class Lurker extends Hydralisk {
         this.hp = lurkerHP
         this.damage = 100;
         this.follower = { t: 0, vec: new Phaser.Math.Vector2() };
+        this.pathFinder = scene.rexBoard.add.pathFinder(this, {
+            occupiedTest: true,
+            pathMode: 'A*',
+        });
+    }
+
+    moveToEnd() {
+        let pathToEnd = this.pathFinder.findPath({
+            x: 119,
+            y: Math.round(this.body.y/16) - 10
+        });
+        this.path = this.scene.add.path(
+            (this.body.x),
+            (this.body.y)
+        );
+        for (let tile of pathToEnd) {
+            this.path.lineTo(
+                (tile.x * 16),
+                (tile.y * 16) + 160    
+            )
+        }
     }
 
     update(time, delta) {
         let prevX = this.follower.vec.x,
         prevY = this.follower.vec.y;
     
-        this.follower.t += (lurkerSpeed / (lurkerpath.getLength() * 60));
+        this.follower.t += (lurkerSpeed / (this.path.getLength() * 60));
     
-        lurkerpath.getPoint(this.follower.t, this.follower.vec);
+        this.path.getPoint(this.follower.t, this.follower.vec);
         
         this.setPosition(this.follower.vec.x, this.follower.vec.y);
         
@@ -117,6 +138,18 @@ class Lurker extends Hydralisk {
         let death = deaths.create(x, y, 'lurker').anims.play('lurker_death').on('animationcomplete', () => {
             death.destroy();
         });
+        Phaser.Actions.Call(headtowers.getChildren(), tower => {
+            this.scene.children.bringToTop(tower);
+        }, this);
+        Phaser.Actions.Call(lurkers.getChildren(), lurker => {
+            this.scene.children.bringToTop(lurker);
+        }, this);
+        Phaser.Actions.Call(hydralisks.getChildren(), hydralisk => {
+            this.scene.children.bringToTop(hydralisk);
+        }, this);
+        Phaser.Actions.Call(bullets.getChildren(), bullet => {
+            this.scene.children.bringToTop(bullet);
+        }, this);
     }
 }
 

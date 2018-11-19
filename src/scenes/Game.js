@@ -234,19 +234,6 @@ class Game extends Phaser.Scene {
     }
     
     update(time, delta) {
-        Phaser.Actions.Call(headtowers.getChildren(), tower => {
-            this.children.bringToTop(tower);
-        }, this);
-        Phaser.Actions.Call(lurkers.getChildren(), lurker => {
-            this.children.bringToTop(lurker);
-        }, this);
-        Phaser.Actions.Call(hydralisks.getChildren(), hydralisk => {
-            this.children.bringToTop(hydralisk);
-        }, this);
-        Phaser.Actions.Call(bullets.getChildren(), bullet => {
-            this.children.bringToTop(bullet);
-        }, this);
-    
         controls.update(delta);
         if (this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE).isDown) {
             this.cameras.main.setZoom(1);

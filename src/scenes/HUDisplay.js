@@ -251,24 +251,17 @@ class HUDisplay extends Phaser.Scene {
             }, this);
     
             let bossWave = waveNumber / 5;
-            let j = 0;
-            let k = 0;
+
             for (let i = 0; i < bossWave; i++) {
-                if (i === 3) {
-                    k = 90;
-                }
-                let lurkerbirth = births.create(151 - k, (j * 90) + 512, 'lurker');
+                let lurkerbirth = births.create(200 - (i * 32), 400, 'lurker');
                 lurkerbirth.anims.play('lurker_birth').on('animationcomplete', () => {
                     let lurker = lurkers.get(lurkerbirth.x, lurkerbirth.y, 'lurker');
-                    // lurker.follower.t = (450 - (i * 90)) / lurkerpath.getLength();
+                    board.addChess(lurker, Math.round(lurker.body.x/16), Math.round(lurker.body.y/16) -10, 0, false);
+                    lurker.moveToEnd();
+                    board.removeChess(lurker, Math.round(lurker.body.x/16), Math.round(lurker.body.y/16) -10, 0, false);
                     lurker.body.setCircle(16, 19, 17)
                     lurkerbirth.destroy();
                 }, this);
-                if (i < 2) {
-                    j--;
-                } else if (i > 2) {
-                    j++;
-                }
             }
         }
         setTimeout( () => {
@@ -295,6 +288,19 @@ class HUDisplay extends Phaser.Scene {
                 }, this);
                 j++;
             }
+
+            Phaser.Actions.Call(headtowers.getChildren(), tower => {
+                this.children.bringToTop(tower);
+            }, this);
+            Phaser.Actions.Call(lurkers.getChildren(), lurker => {
+                this.children.bringToTop(lurker);
+            }, this);
+            Phaser.Actions.Call(hydralisks.getChildren(), hydralisk => {
+                this.children.bringToTop(hydralisk);
+            }, this);
+            Phaser.Actions.Call(bullets.getChildren(), bullet => {
+                this.children.bringToTop(bullet);
+            }, this);
         }, birthTime)
     }
 }

@@ -6,7 +6,6 @@ class Hydralisk extends Phaser.GameObjects.Sprite {
         super(scene, x, y, texture, frame);
         this.hp = hydraliskHP;
         this.damage = 100;
-        this.lastTile = null;
         this.follower = { t: 0, vec: new Phaser.Math.Vector2() };
         this.pathFinder = scene.rexBoard.add.pathFinder(this, {
             occupiedTest: true,
@@ -137,7 +136,19 @@ class Hydralisk extends Phaser.GameObjects.Sprite {
             let corpse = deaths.create(x, y, 'hydralisk').anims.play('hydra_corpse').on('animationcomplete', () => {
                 corpse.destroy();
             });
-        });
+        }, this);
+        Phaser.Actions.Call(headtowers.getChildren(), tower => {
+            this.scene.children.bringToTop(tower);
+        }, this);
+        Phaser.Actions.Call(lurkers.getChildren(), lurker => {
+            this.scene.children.bringToTop(lurker);
+        }, this);
+        Phaser.Actions.Call(hydralisks.getChildren(), hydralisk => {
+            this.scene.children.bringToTop(hydralisk);
+        }, this);
+        Phaser.Actions.Call(bullets.getChildren(), bullet => {
+            this.scene.children.bringToTop(bullet);
+        }, this);
     }
 }
 
