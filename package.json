@@ -17,6 +17,7 @@
     "babel-preset-env": "^1.7.0",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^1.0.1",
+    "easystarjs": "^0.4.3",
     "file-loader": "^2.0.0",
     "json-loader": "^0.5.7",
     "style-loader": "^0.23.1",

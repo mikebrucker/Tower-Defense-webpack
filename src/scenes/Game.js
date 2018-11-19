@@ -138,13 +138,12 @@ class Game extends Phaser.Scene {
                         logWorldLayer[y-1][x].properties.buildable = false;
                         logWorldLayer[y][x-1].properties.buildable = false;
                         logWorldLayer[y-1][x-1].properties.buildable = false;
-                        for (let i = 0; i < 24; i++) {
-                            this.rexBoard.add.shape(board, x-1, y-11, i, 0, 0).rexChess.setBlocker();
-                            this.rexBoard.add.shape(board, x, y-11, i, 0, 0).rexChess.setBlocker();
-                            this.rexBoard.add.shape(board, x-1, y-10, i, 0, 0).rexChess.setBlocker();
-                            this.rexBoard.add.shape(board, x, y-10, i, 0, 0).rexChess.setBlocker();
-                        }
-                        
+
+                        this.rexBoard.add.shape(board, x-1, y-11, 0, 0, 0).rexChess.setBlocker();
+                        this.rexBoard.add.shape(board, x, y-11, 0, 0, 0).rexChess.setBlocker();
+                        this.rexBoard.add.shape(board, x-1, y-10, 0, 0, 0).rexChess.setBlocker();
+                        this.rexBoard.add.shape(board, x, y-10, 0, 0, 0).rexChess.setBlocker();
+
                         resources--;
                         resourcesDisplay.setText(`Resources: ${resources}`)
                         if (resources >= upgradeCost) {
@@ -204,6 +203,11 @@ class Game extends Phaser.Scene {
                 logWorldLayer[y-1][x].properties.buildable = true;
                 logWorldLayer[y][x-1].properties.buildable = true;
                 logWorldLayer[y-1][x-1].properties.buildable = true;
+
+                board.removeChess(null, x-1, y-11, 0, true);
+                board.removeChess(null, x, y-11, 0, true);
+                board.removeChess(null, x-1, y-10, 0, true);
+                board.removeChess(null, x, y-10, 0, true);
             }
         }, this);
         
@@ -230,14 +234,14 @@ class Game extends Phaser.Scene {
     }
     
     update(time, delta) {
+        Phaser.Actions.Call(headtowers.getChildren(), tower => {
+            this.children.bringToTop(tower);
+        }, this);
         Phaser.Actions.Call(lurkers.getChildren(), lurker => {
             this.children.bringToTop(lurker);
         }, this);
         Phaser.Actions.Call(hydralisks.getChildren(), hydralisk => {
             this.children.bringToTop(hydralisk);
-        }, this);
-        Phaser.Actions.Call(headtowers.getChildren(), tower => {
-            this.children.bringToTop(tower);
         }, this);
         Phaser.Actions.Call(bullets.getChildren(), bullet => {
             this.children.bringToTop(bullet);

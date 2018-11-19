@@ -280,19 +280,17 @@ class HUDisplay extends Phaser.Scene {
                 birth.destroy();
             }, this);
             for (let i = 0; i < 24; i++) {
-                if (i % 4 === 0 && i > 0) {
+                if (j === 4) {
                     j = 0;
-                }
-                if (i % 4 === 0 && i > 0) {
                     k++;
                 }
-                let birth = births.create((j * 36) + 52, (k * 36) + 332, 'hydralisk');
+                let birth = births.create((j * 32) + 56, (k * 32) + 320, 'hydralisk');
                 birth.anims.play('hydra_birth').on('animationcomplete', () => {
                     let hydra = hydralisks.get(birth.x, birth.y, 'hydralisk');
-                    board.addChess(hydra, Math.round(hydra.body.x/16), Math.round(hydra.body.y/16) -10, i, false);
-                    // hydra.follower.t = (i * 36) / path.getLength();
-                    hydra.body.setCircle(16, 6, 13);
+                    board.addChess(hydra, Math.round(hydra.body.x/16), Math.round(hydra.body.y/16) -10, 0, false);
                     hydra.moveToEnd();
+                    board.removeChess(hydra, Math.round(hydra.body.x/16), Math.round(hydra.body.y/16) -10, 0, false);
+                    hydra.body.setCircle(16, 6, 13);
                     birth.destroy();
                 }, this);
                 j++;
