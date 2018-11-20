@@ -29,8 +29,18 @@ class Lurker extends Hydralisk {
                 (tile.y * 16) + 160    
             )
         }
+        if (pathToEnd[pathToEnd.length-1].x != 119) {
+            this.path = this.scene.add.path(
+                (this.body.x),
+                (this.body.y)
+            )
+            this.path.lineTo(
+                1904,
+                (this.body.y)
+            )
+        }
     }
-
+    
     update(time, delta) {
         let prevX = this.follower.vec.x,
         prevY = this.follower.vec.y;

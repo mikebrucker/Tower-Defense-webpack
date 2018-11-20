@@ -28,6 +28,16 @@ class Hydralisk extends Phaser.GameObjects.Sprite {
                 (tile.y * 16) + 160    
             )
         }
+        if (pathToEnd[pathToEnd.length-1].x != 119) {
+            this.path = this.scene.add.path(
+                (this.body.x),
+                (this.body.y)
+            )
+            this.path.lineTo(
+                1904,
+                (this.body.y)
+            )
+        }
     }
     
     update(time, delta) {
@@ -132,10 +142,22 @@ class Hydralisk extends Phaser.GameObjects.Sprite {
     
     deathAnimation(x, y) {
         let death = deaths.create(x, y, 'hydralisk').anims.play('hydra_death').on('animationcomplete', () => {
-            death.destroy();
             let corpse = deaths.create(x, y, 'hydralisk').anims.play('hydra_corpse').on('animationcomplete', () => {
                 corpse.destroy();
             });
+            Phaser.Actions.Call(headtowers.getChildren(), tower => {
+                death.scene.children.bringToTop(tower);
+            }, this);
+            Phaser.Actions.Call(lurkers.getChildren(), lurker => {
+                death.scene.children.bringToTop(lurker);
+            }, this);
+            Phaser.Actions.Call(hydralisks.getChildren(), hydralisk => {
+                death.scene.children.bringToTop(hydralisk);
+            }, this);
+            Phaser.Actions.Call(bullets.getChildren(), bullet => {
+                death.scene.children.bringToTop(bullet);
+            }, this);
+            death.destroy();
         }, this);
         Phaser.Actions.Call(headtowers.getChildren(), tower => {
             this.scene.children.bringToTop(tower);
