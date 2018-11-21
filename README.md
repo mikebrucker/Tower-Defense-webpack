@@ -7,5 +7,5 @@
 1. You can also run `npm run build` to build the `dist/` folder.
 
 Enemies find a path to the finish line.  
-If you block the path, they walk through everything.
+If you block the path, they walk through everything.  
 Currently unbalanced.
