@@ -1,4 +1,4 @@
-# Tower Defense Webpack
+# Tower Defense v2.0.0
 
 ## Instructions
 1. Clone this repository.
@@ -8,4 +8,5 @@
 
 Enemies find a path to the finish line.  
 If you block the path, they walk through everything.  
-Currently unbalanced.
+Currently unbalanced.  
+[Version 1.0.0](tower-defense.mikebrucker.com) | [Repo](https://github.com/mikebrucker/Tower-Defense)  

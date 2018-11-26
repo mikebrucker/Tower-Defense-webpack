@@ -1,6 +1,6 @@
 {
-  "name": "phaser3-webpack",
-  "version": "1.0.0",
+  "name": "tower-defense-webpack",
+  "version": "2.0.0",
   "description": "",
   "private": true,
   "scripts": {
