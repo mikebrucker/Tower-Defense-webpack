@@ -9,4 +9,4 @@
 Enemies find a path to the finish line.  
 If you block the path, they walk through everything.  
 Currently unbalanced.  
-[Version 1.0.0](tower-defense.mikebrucker.com) | [Repo](https://github.com/mikebrucker/Tower-Defense)  
+[Version 1.0.0](https://tower-defense.mikebrucker.com) | [Repo](https://github.com/mikebrucker/Tower-Defense)  
